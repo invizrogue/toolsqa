@@ -41,8 +41,16 @@ public class PracticeFormPage {
     private final ElementsCollection listDaysCurrentMonth =
             $$("div.react-datepicker__week div:not(.react-datepicker__day--outside-month)");
 
+    // file-upload
+    private final SelenideElement buttonUploadPicture = $("#uploadPicture");
+
     // dropdown-menu
-//    private final
+    private final SelenideElement dropdownState = $("#state");
+    private final SelenideElement dropdownCity = $("#city");
+    private final ElementsCollection listStates =
+            $$x("//div[@id='state']//div[contains(@id, 'react-select-3-option')]");
+    private final ElementsCollection listCities =
+            $$x("//div[@id='city']//div[contains(@id, 'react-select-4-option')]");
 
     // subject
     private final SelenideElement fieldSubjects = $("#subjectsInput");
@@ -56,6 +64,21 @@ public class PracticeFormPage {
 
     public PracticeFormPage(String url) {
         open(url);
+    }
+
+    public void selectFirstState() {
+        dropdownState.click();
+        listStates.first().click();
+    }
+
+    public void selectFirstCity() {
+        dropdownCity.shouldBe(enabled);
+        dropdownCity.click();
+        listCities.first().click();
+    }
+
+    public void selectFileToUpload(String file) {
+        buttonUploadPicture.uploadFromClasspath(file);
     }
 
     public void fillSubjectField(String subject) {
