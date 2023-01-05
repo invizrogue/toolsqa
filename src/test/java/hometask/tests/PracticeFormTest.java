@@ -13,14 +13,15 @@ public class PracticeFormTest extends Base {
         String firstName = faker.name().firstName(),
                 lastName = faker.name().lastName(),
                 email = faker.internet().emailAddress(),
-                phoneNumber = faker.phoneNumber().phoneNumber().replaceAll("\\D", ""),
+                phoneNumber = faker.phoneNumber().phoneNumber().replaceAll("\\D", "").substring(0, 10),
                 address = faker.address().fullAddress(),
                 fileName = "cat_notebook.jpeg",
-                day = "15",
+                day = "5",
                 month = "March",
                 year = "1980";
 
         PracticeFormPage formPage = new PracticeFormPage("/automation-practice-form");
+        formPage.disableScripts();
 
         formPage.checkMainHeader();
         // fields
@@ -47,8 +48,8 @@ public class PracticeFormTest extends Base {
         formPage.checkedChkboxSports();
 
         // subject
-        formPage.fillSubjectField("ma");
-        formPage.fillSubjectField("ar");
+        formPage.fillSubjectField("Math");
+        formPage.fillSubjectField("Arts");
         formPage.removeFirstSubjectInList();
 
         // calendar
@@ -63,5 +64,19 @@ public class PracticeFormTest extends Base {
 
         // press submit button
         formPage.pressSubmitButton();
+//        formPage.switchToModal();
+
+        formPage.checkModal();
+        formPage.checkFullName(firstName, lastName);
+        formPage.checkEmail(email);
+        formPage.checkGenderMale();
+        formPage.checkMobile(phoneNumber);
+        formPage.checkDateOfBirth(day, month, year);
+        formPage.checkSubjects("Arts");
+        formPage.checkHobbiesSports();
+        formPage.checkPicture(fileName);
+        formPage.checkAddress(address);
+        formPage.checkStateAndCity();
+        formPage.closeModal();
     }
 }

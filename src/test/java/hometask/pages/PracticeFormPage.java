@@ -3,13 +3,15 @@ package hometask.pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
-    // header
+    // headers
     private final SelenideElement mainHeader = $(".main-header");
+    private final SelenideElement modalHeader = $(".modal-header");
 
-    // field
+    // fields
     private final SelenideElement fieldFirstName = $("[placeholder='First Name']");
     private final SelenideElement fieldLastName = $("[placeholder='Last Name']");
     private final SelenideElement fieldEmail = $("#userEmail");
@@ -59,11 +61,17 @@ public class PracticeFormPage {
     private final ElementsCollection listRemoveSubjectOptions =
             $$(".subjects-auto-complete__multi-value__remove");
 
-    // button
+    // buttons
     private final SelenideElement buttonSubmit = $("#submit");
+    private final SelenideElement buttonCloseModal = $("#closeLargeModal");
 
     public PracticeFormPage(String url) {
         open(url);
+    }
+
+    public void disableScripts() {
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
     }
 
     public void selectFirstState() {
@@ -193,5 +201,67 @@ public class PracticeFormPage {
 
     public void pressSubmitButton() {
         buttonSubmit.scrollTo().click();
+    }
+
+    public void checkModal() {
+        modalHeader.should(visible);
+    }
+    public void checkFullName(String firstName, String lastName) {
+        $(withTagAndText("td", "Student Name"))
+                .sibling(0).shouldHave(text(firstName + " " + lastName));
+    }
+
+    public void checkEmail(String email) {
+        $(withTagAndText("td", "Student Email"))
+                .sibling(0).shouldHave(text(email));
+    }
+
+    public void checkGenderMale() {
+        $(withTagAndText("td", "Gender"))
+                .sibling(0).shouldHave(text("Male"));
+    }
+
+    public void checkMobile(String phoneNumber) {
+        $(withTagAndText("td", "Mobile"))
+                .sibling(0).shouldHave(text(phoneNumber));
+    }
+
+    public void checkDateOfBirth(String day, String month, String year) {
+        // добавляю ведущий нуль, если число не двузначное
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+        $(withTagAndText("td", "Date of Birth"))
+                .sibling(0).shouldHave(text(day + " " + month + "," + year));
+    }
+
+    public void checkSubjects(String subj) {
+        // проверяю наличие только оставшейся дисциплины (можно и список проверить, но конкретного тз не было
+        $(withTagAndText("td", "Subjects"))
+                .sibling(0).shouldHave(text(subj));
+    }
+
+    public void checkHobbiesSports() {
+        $(withTagAndText("td", "Hobbies"))
+                .sibling(0).shouldHave(text("Sports"));
+    }
+
+    public void checkPicture(String fileName) {
+        $(withTagAndText("td", "Picture"))
+                .sibling(0).shouldHave(text(fileName));
+    }
+
+    public void checkAddress(String address) {
+        $(withTagAndText("td", "Address"))
+                .sibling(0).shouldHave(text(address));
+    }
+
+    public void checkStateAndCity() {
+        $(withTagAndText("td", "State and City"))
+                .sibling(0).shouldHave(text("NCR Delhi"));
+    }
+
+    public void  closeModal() {
+        buttonCloseModal.click();
     }
 }
