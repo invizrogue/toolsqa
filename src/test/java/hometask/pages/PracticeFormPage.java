@@ -8,62 +8,68 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
     // headers
-    private final SelenideElement mainHeader = $(".main-header");
-    private final SelenideElement modalHeader = $(".modal-header");
+    private final SelenideElement
+            mainHeader = $(".main-header"),
+            modalHeader = $(".modal-header");
 
     // fields
-    private final SelenideElement fieldFirstName = $("[placeholder='First Name']");
-    private final SelenideElement fieldLastName = $("[placeholder='Last Name']");
-    private final SelenideElement fieldEmail = $("#userEmail");
-    private final SelenideElement fieldMobileNumber = $("[placeholder='Mobile Number']");
-    private final SelenideElement fieldCurrAddress = $("#currentAddress");
+    private final SelenideElement
+            fieldFirstName = $("[placeholder='First Name']"),
+            fieldLastName = $("[placeholder='Last Name']"),
+            fieldEmail = $("#userEmail"),
+            fieldMobileNumber = $("[placeholder='Mobile Number']"),
+            fieldCurrAddress = $("#currentAddress");
 
     // radio
-    private final SelenideElement radioMale = $("#gender-radio-1");
-    private final SelenideElement radioFemale = $("#gender-radio-2");
-    private final SelenideElement radioOther = $("#gender-radio-3");
-    private final SelenideElement clickplaceRadioMale = $("label[for='gender-radio-1'");
-    private final SelenideElement clickplaceRadioFemale = $("label[for='gender-radio-2'");
-    private final SelenideElement clickplaceRadioOther = $("label[for='gender-radio-3'");
+    private final SelenideElement
+            radioMale = $("#gender-radio-1"),
+            radioFemale = $("#gender-radio-2"),
+            radioOther = $("#gender-radio-3"),
+            clickplaceRadioMale = $("label[for='gender-radio-1'"),
+            clickplaceRadioFemale = $("label[for='gender-radio-2'"),
+            clickplaceRadioOther = $("label[for='gender-radio-3'");
 
     // checkbox
-    private final SelenideElement chkboxSports = $("#hobbies-checkbox-1");
-    private final SelenideElement chkboxReading = $("#hobbies-checkbox-2");
-    private final SelenideElement chkboxMusic = $("#hobbies-checkbox-3");
-    private final SelenideElement clickplaceChkboxSports = $("label[for='hobbies-checkbox-1']");
-    private final SelenideElement clickplaceChkboxReading = $("label[for='hobbies-checkbox-2']");
-    private final SelenideElement clickplaceChkboxMusic = $("label[for='hobbies-checkbox-3']");
+    private final SelenideElement
+            chkboxSports = $("#hobbies-checkbox-1"),
+            chkboxReading = $("#hobbies-checkbox-2"),
+            chkboxMusic = $("#hobbies-checkbox-3"),
+            clickplaceChkboxSports = $("label[for='hobbies-checkbox-1']"),
+            clickplaceChkboxReading = $("label[for='hobbies-checkbox-2']"),
+            clickplaceChkboxMusic = $("label[for='hobbies-checkbox-3']");
 
     // calendar
-    private final SelenideElement fieldCalendar = $("#dateOfBirthInput");
-    private final SelenideElement dropdownYear = $(".react-datepicker__year-select");
-    private final ElementsCollection listYears = $$(".react-datepicker__year-select>option");
-    private final SelenideElement dropdownMonth = $(".react-datepicker__month-select");
-    private final ElementsCollection listMonths = $$(".react-datepicker__month-select>option");
-    private final ElementsCollection listDaysCurrentMonth =
-            $$("div.react-datepicker__week div:not(.react-datepicker__day--outside-month)");
+    private final SelenideElement
+            fieldCalendar = $("#dateOfBirthInput"),
+            dropdownYear = $(".react-datepicker__year-select"),
+            dropdownMonth = $(".react-datepicker__month-select");
+    private final ElementsCollection
+            listYears = $$(".react-datepicker__year-select>option"),
+            listMonths = $$(".react-datepicker__month-select>option"),
+            listDaysCurrentMonth =
+                    $$("div.react-datepicker__week div:not(.react-datepicker__day--outside-month)");
 
     // file-upload
     private final SelenideElement buttonUploadPicture = $("#uploadPicture");
 
     // dropdown-menu
-    private final SelenideElement dropdownState = $("#state");
-    private final SelenideElement dropdownCity = $("#city");
-    private final ElementsCollection listStates =
-            $$x("//div[@id='state']//div[contains(@id, 'react-select-3-option')]");
-    private final ElementsCollection listCities =
-            $$x("//div[@id='city']//div[contains(@id, 'react-select-4-option')]");
+    private final SelenideElement
+            dropdownState = $("#state"),
+            dropdownCity = $("#city");
+    private final ElementsCollection
+            listStates = $$x("//div[@id='state']//div[contains(@id, 'react-select-3-option')]"),
+            listCities = $$x("//div[@id='city']//div[contains(@id, 'react-select-4-option')]");
 
     // subject
     private final SelenideElement fieldSubjects = $("#subjectsInput");
-    private final ElementsCollection listSubjectOptions =
-            $$(".subjects-auto-complete__menu-list .subjects-auto-complete__option");
-    private final ElementsCollection listRemoveSubjectOptions =
-            $$(".subjects-auto-complete__multi-value__remove");
+    private final ElementsCollection
+            listSubjectOptions = $$(".subjects-auto-complete__menu-list .subjects-auto-complete__option"),
+            listRemoveSubjectOptions = $$(".subjects-auto-complete__multi-value__remove");
 
     // buttons
-    private final SelenideElement buttonSubmit = $("#submit");
-    private final SelenideElement buttonCloseModal = $("#closeLargeModal");
+    private final SelenideElement
+            buttonSubmit = $("#submit"),
+            buttonCloseModal = $("#closeLargeModal");
 
     public PracticeFormPage(String url) {
         open(url);
