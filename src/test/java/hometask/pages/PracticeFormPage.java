@@ -2,15 +2,20 @@ package hometask.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import hometask.pages.components.CalendarComponent;
+import hometask.pages.components.ModalComponent;
+import hometask.pages.components.SubjectComponent;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
+    CalendarComponent calendar = new CalendarComponent();
+    SubjectComponent subject = new SubjectComponent();
+    ModalComponent modal = new ModalComponent();
+
     // headers
     private final SelenideElement
-            mainHeader = $(".main-header"),
-            modalHeader = $(".modal-header");
+            mainHeader = $(".main-header");
 
     // fields
     private final SelenideElement
@@ -40,14 +45,7 @@ public class PracticeFormPage {
 
     // calendar
     private final SelenideElement
-            fieldCalendar = $("#dateOfBirthInput"),
-            dropdownYear = $(".react-datepicker__year-select"),
-            dropdownMonth = $(".react-datepicker__month-select");
-    private final ElementsCollection
-            listYears = $$(".react-datepicker__year-select>option"),
-            listMonths = $$(".react-datepicker__month-select>option"),
-            listDaysCurrentMonth =
-                    $$("div.react-datepicker__week div:not(.react-datepicker__day--outside-month)");
+            fieldCalendar = $("#dateOfBirthInput");
 
     // file-upload
     private final SelenideElement buttonUploadPicture = $("#uploadPicture");
@@ -60,214 +58,176 @@ public class PracticeFormPage {
             listStates = $$x("//div[@id='state']//div[contains(@id, 'react-select-3-option')]"),
             listCities = $$x("//div[@id='city']//div[contains(@id, 'react-select-4-option')]");
 
-    // subject
-    private final SelenideElement fieldSubjects = $("#subjectsInput");
-    private final ElementsCollection
-            listSubjectOptions = $$(".subjects-auto-complete__menu-list .subjects-auto-complete__option"),
-            listRemoveSubjectOptions = $$(".subjects-auto-complete__multi-value__remove");
-
     // buttons
     private final SelenideElement
-            buttonSubmit = $("#submit"),
-            buttonCloseModal = $("#closeLargeModal");
+            buttonSubmit = $("#submit");
 
     public PracticeFormPage(String url) {
         open(url);
     }
 
-    public void disableScripts() {
+    public PracticeFormPage disableScripts() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
+        return this;
     }
 
-    public void selectFirstState() {
+    public PracticeFormPage selectFirstState() {
         dropdownState.click();
         listStates.first().click();
+        return this;
     }
 
-    public void selectFirstCity() {
+    public PracticeFormPage selectFirstCity() {
         dropdownCity.shouldBe(enabled);
         dropdownCity.click();
         listCities.first().click();
+        return this;
     }
 
-    public void selectFileToUpload(String file) {
+    public PracticeFormPage selectFileToUpload(String file) {
         buttonUploadPicture.uploadFromClasspath(file);
+        return this;
     }
 
-    public void fillSubjectField(String subject) {
-        fieldSubjects.setValue(subject);
-        listSubjectOptions.first().click();
+    public PracticeFormPage fillSubjectField(String subj) {
+        subject.selectSubject(subj);
+        return this;
     }
 
-    private void fillYear(String year) {
-        dropdownYear.click();
-        listYears.findBy(text(year)).click();
+    public PracticeFormPage removeFirstSubjectInList() {
+        subject.deleteFirstSubject();
+        return this;
     }
 
-    private void fillMonth(String month) {
-        dropdownMonth.click();
-        listMonths.findBy(text(month)).click();
-    }
-
-    private void fillDay(String day) {
-        listDaysCurrentMonth.findBy(text(day)).click();
-    }
-
-    public void fillDate(String day, String month, String year) {
+    public PracticeFormPage fillDate(String day, String month, String year) {
         fieldCalendar.click();
-        fillYear(year);
-        fillMonth(month);
-        fillDay(day);
+        calendar.selectDate(day, month, year);
+        return this;
     }
 
-    public void removeFirstSubjectInList() {
-        listRemoveSubjectOptions.first().click();
-    }
-
-    public void checkMainHeader() {
+    public PracticeFormPage checkMainHeader() {
         mainHeader.shouldHave(text("Practice Form"));
+        return this;
     }
 
-    public void fillFirstNameField(String name) {
+    public PracticeFormPage fillFirstNameField(String name) {
         fieldFirstName.setValue(name);
+        return this;
     }
 
-    public void fillLastNameField(String lastName) {
+    public PracticeFormPage fillLastNameField(String lastName) {
         fieldLastName.setValue(lastName);
+        return this;
     }
 
-    public void fillEmailField(String email) {
+    public PracticeFormPage fillEmailField(String email) {
         fieldEmail.setValue(email);
+        return this;
     }
 
-    public void fillMobileNumberField(String phone) {
+    public PracticeFormPage fillMobileNumberField(String phone) {
         fieldMobileNumber.setValue(phone);
+        return this;
     }
 
-    public void fillCurrAddressField(String address) {
+    public PracticeFormPage fillCurrAddressField(String address) {
         fieldCurrAddress.setValue(address);
+        return this;
     }
 
-    public void selectMaleGender() {
+    public PracticeFormPage selectMaleGender() {
         clickplaceRadioMale.click();
         radioMale.shouldBe(checked);
         radioFemale.shouldNotBe(checked);
         radioOther.shouldNotBe(checked);
+        return this;
     }
 
-    public void selectFemaleGender() {
+    public PracticeFormPage selectFemaleGender() {
         clickplaceRadioFemale.click();
         radioMale.shouldNotBe(checked);
         radioFemale.shouldBe(checked);
         radioOther.shouldNotBe(checked);
+        return this;
     }
 
-    public void selectOtherGender() {
+    public PracticeFormPage selectOtherGender() {
         clickplaceRadioOther.click();
         radioMale.shouldNotBe(checked);
         radioFemale.shouldNotBe(checked);
         radioOther.shouldBe(checked);
+        return this;
     }
 
-    public void clickChkboxSports() {
+    public PracticeFormPage clickChkboxSports() {
         clickplaceChkboxSports.click();
+        return this;
     }
 
-    public void checkedChkboxSports() {
+    public PracticeFormPage checkedChkboxSports() {
         chkboxSports.shouldBe(checked);
+        return this;
     }
 
-    public void uncheckedChkboxSports() {
+    public PracticeFormPage uncheckedChkboxSports() {
         chkboxSports.shouldNotBe(checked);
+        return this;
     }
 
-    public void clickChkboxReading() {
+    public PracticeFormPage clickChkboxReading() {
         clickplaceChkboxReading.click();
+        return this;
     }
 
-    public void checkedChkboxReading() {
+    public PracticeFormPage checkedChkboxReading() {
         chkboxReading.shouldBe(checked);
+        return this;
     }
 
-    public void uncheckedChkboxReading() {
+    public PracticeFormPage uncheckedChkboxReading() {
         chkboxReading.shouldNotBe(checked);
+        return this;
     }
 
-    public void clickChkboxMusic() {
+    public PracticeFormPage clickChkboxMusic() {
         clickplaceChkboxMusic.click();
+        return this;
     }
 
-    public void checkedChkboxMusic() {
+    public PracticeFormPage checkedChkboxMusic() {
         chkboxMusic.shouldBe(checked);
+        return this;
     }
-    public void uncheckedChkboxMusic() {
+
+    public PracticeFormPage uncheckedChkboxMusic() {
         chkboxMusic.shouldNotBe(checked);
+        return this;
     }
 
-    public void pressSubmitButton() {
+    public PracticeFormPage pressSubmitButton() {
         buttonSubmit.scrollTo().click();
+        return this;
     }
 
-    public void checkModal() {
-        modalHeader.should(visible);
-    }
-    public void checkFullName(String firstName, String lastName) {
-        $(withTagAndText("td", "Student Name"))
-                .sibling(0).shouldHave(text(firstName + " " + lastName));
-    }
-
-    public void checkEmail(String email) {
-        $(withTagAndText("td", "Student Email"))
-                .sibling(0).shouldHave(text(email));
-    }
-
-    public void checkGenderMale() {
-        $(withTagAndText("td", "Gender"))
-                .sibling(0).shouldHave(text("Male"));
-    }
-
-    public void checkMobile(String phoneNumber) {
-        $(withTagAndText("td", "Mobile"))
-                .sibling(0).shouldHave(text(phoneNumber));
-    }
-
-    public void checkDateOfBirth(String day, String month, String year) {
-        // добавляю ведущий нуль, если число не двузначное
+    public void checkFinalModal(
+            String firstName, String lastName, String email, String phoneNumber,
+            String day, String month, String year, String fileName, String address
+            ) {
         if (day.length() == 1) {
             day = "0" + day;
         }
-        $(withTagAndText("td", "Date of Birth"))
-                .sibling(0).shouldHave(text(day + " " + month + "," + year));
-    }
-
-    public void checkSubjects(String subj) {
-        // проверяю наличие только оставшейся дисциплины (можно и список проверить, но конкретного тз не было
-        $(withTagAndText("td", "Subjects"))
-                .sibling(0).shouldHave(text(subj));
-    }
-
-    public void checkHobbiesSports() {
-        $(withTagAndText("td", "Hobbies"))
-                .sibling(0).shouldHave(text("Sports"));
-    }
-
-    public void checkPicture(String fileName) {
-        $(withTagAndText("td", "Picture"))
-                .sibling(0).shouldHave(text(fileName));
-    }
-
-    public void checkAddress(String address) {
-        $(withTagAndText("td", "Address"))
-                .sibling(0).shouldHave(text(address));
-    }
-
-    public void checkStateAndCity() {
-        $(withTagAndText("td", "State and City"))
-                .sibling(0).shouldHave(text("NCR Delhi"));
-    }
-
-    public void  closeModal() {
-        buttonCloseModal.click();
+        modal.checkModal()
+                .verifyKeyValue("Student Name", firstName + " " + lastName)
+                .verifyKeyValue("Student Email", email)
+                .verifyKeyValue("Gender", "Male")
+                .verifyKeyValue("Mobile", phoneNumber)
+                .verifyKeyValue("Date of Birth", day + " " + month + "," + year)
+                .verifyKeyValue("Subjects", "Arts")
+                .verifyKeyValue("Hobbies", "Sports")
+                .verifyKeyValue("Picture", fileName)
+                .verifyKeyValue("Address", address)
+                .verifyKeyValue("State and City", "NCR Delhi")
+                .closeModal();
     }
 }
