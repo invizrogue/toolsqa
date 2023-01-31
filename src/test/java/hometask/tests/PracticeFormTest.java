@@ -1,24 +1,25 @@
 package hometask.tests;
 
-import com.github.javafaker.Faker;
 import hometask.base.Base;
 import hometask.pages.PracticeFormPage;
 import org.junit.jupiter.api.Test;
+
+import static hometask.base.utils.RandomUtils.*;
 
 public class PracticeFormTest extends Base {
 
     @Test
     void submitPracticeFormTest() {
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName(),
-                lastName = faker.name().lastName(),
-                email = faker.internet().emailAddress(),
-                phoneNumber = faker.phoneNumber().phoneNumber().replaceAll("\\D", "").substring(0, 10),
-                address = faker.address().fullAddress(),
+
+        String firstName = randomFirstName(),
+                lastName = randomLastName(),
+                email = randomEmail(),
+                phoneNumber = randomPhoneNumber(),
+                address = randomFullAddress(),
                 fileName = "cat_notebook.jpeg",
-                day = "5",
-                month = "March",
-                year = "1980";
+                day = randomDay(),
+                month = randomMonth(),
+                year = randomBirthYear();
 
         PracticeFormPage formPage = new PracticeFormPage("/automation-practice-form");
         formPage.disableScripts()
